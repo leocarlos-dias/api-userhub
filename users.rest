@@ -1,0 +1,48 @@
+### variables
+@baseUrl = http://localhost:3333
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG0iOnRydWUsImlhdCI6MTY3NjU4MDEwOCwiZXhwIjoxNjc2NTgzNzA4LCJzdWIiOiI2MSJ9.4f9tH-hrw5UlqvIM6gxKQW3oKi8RFv7RMfFgIfD9R04
+
+### Register a new user.
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "leo",
+  "email": "leo2@kenzie.com.br",
+  "password": "123",
+  "admin": true
+}
+
+### Get all users.
+GET {{baseUrl}}/users
+Authorization: Bearer {{token}}
+
+### Authentication a user.
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "leo2@kenzie.com.br",
+  "password": "123"
+}
+
+### Update a user.
+PATCH {{baseUrl}}/users/61
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Leonardo ABC"
+}
+
+### Session a user.
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{token}}
+
+### Remove a user.
+DELETE {{baseUrl}}/users/53
+Authorization: Bearer {{token}}
+
+### Employ a user.
+PUT {{baseUrl}}/users/53/recover
+Authorization: Bearer {{token}}
