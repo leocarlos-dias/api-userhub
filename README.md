@@ -1,17 +1,71 @@
-# Employee Manager
+# UserHub
 
-Aqui você pode listar, cadastrar, atualizar e até desativar um usuários do seu sistema.
+### Sobre
 
-## Tecnologias utilizadas
-
-*  Typescript
-*  NodeJS
-*  Postgres
-*  Zod
-*  JWT
+Este é um serviço web (API) consiste em um serviço de gerenciamento de usuários que permite listar, cadastrar, atualizar e desativar usuários em um sistema. Este serviço é implementado usando as tecnologias TypeScript, NodeJS, Postgres, Zod e JWT.
 
 
-## Endpoints do serviço
+### Tecnologias Utilizadas
+
+Abaixo estão listadas as principais tecnologias utilizadas neste projeto:
+
+- **Node.js** com **TypeScript** como linguagem de programação e ambiente de execução;
+- **Express** como framework para desenvolvimento de aplicações web em Node.js;
+- **Postgres** como banco de dados relacional em ambiente de produção;
+- **JWT** (JSON Web Tokens) para autenticação e autorização de rotas;
+- **zod** para validação de dados nas rotas da API.
+
+### Instalação
+
+Para instalar as dependências necessárias, execute o seguinte comando:
+
+```bash
+npm install
+# ou
+yarn
+```
+
+### Configuração
+
+Para configurar a aplicação, crie um arquivo .env na raiz do projeto e defina as seguintes variáveis de ambiente:
+
+```bash
+PGHOST=DB
+PGUSER=DB
+PGDATABASE=DB
+PGPASSWORD=DB
+PGPORT=DB
+
+PORT=SERVER
+SECRET_KEY=JWT
+```
+
+Para criar a tabela:
+
+```bash
+CREATE TABLE users (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(20) NOT NULL,
+	email VARCHAR(100) NOT NULL UNIQUE,
+	"password" VARCHAR(120) NOT NULL,
+	"admin" boolean DEFAULT FALSE,
+	active boolean DEFAULT TRUE
+);
+```
+
+### Execução
+
+Para iniciar a aplicação, execute o seguinte comando:
+
+```bash
+npm run dev
+# ou
+yarn dev
+```
+
+### Documentação
+
+#### Endpoints do serviço
 
 | Método | Endpoint | Responsabilidade |
 |--------|----------|------------------|
@@ -23,7 +77,7 @@ Aqui você pode listar, cadastrar, atualizar e até desativar um usuários do se
 | DELETE | /users/:id | Desativar um usuário |
 | PUT | /users/:id/recover | Ativar um usuário |
 
-## **Tabela**
+#### **Tabela**
 
 * **Nome da tabela**: users
 * **Colunas da tabela**:
@@ -35,7 +89,7 @@ Aqui você pode listar, cadastrar, atualizar e até desativar um usuários do se
   * **active**: boolean, valor padrão verdadeiro.
 
 
-### **POST: /users**
+#### **POST: /users**
 
 * Cria uma conta:
   * **name**: string.
@@ -43,22 +97,21 @@ Aqui você pode listar, cadastrar, atualizar e até desativar um usuários do se
   * **password**: string.
   * **admin**: boolean.
 
-### **POST: /login**
+#### **POST: /login**
 
 * Se autentica:
   * **email**: string.
   * **password**: string.
 
-
-### **GET: /users**
+#### **GET: /users**
 
 * Lista todos os usuário.
 
-### **GET: /users/profile**
+#### **GET: /users/profile**
 
 * Verifica o usuário autenticado.
 
-### **PATCH: /users/:id**
+#### **PATCH: /users/:id**
 
 * Atualiza um usuário:
   * **name**: string e opcional.
@@ -66,25 +119,15 @@ Aqui você pode listar, cadastrar, atualizar e até desativar um usuários do se
   * **password**: string e opcional.
 
 
-### **DELETE: /users/:id**
+#### **DELETE: /users/:id**
 
 * Desativa um usuário.
 
-### **PUT: /users/:id/recover**
+#### **PUT: /users/:id/recover**
 
 * Ativa um usuário.
 
+#### Este serviço possui algumas regras de negócios que precisam ser respeitadas:
 
-## **Regras de negócios**
-
-* Um usuário comum:
-    * **Se autenticar**
-    * **Verificar autenticação**
-    * **Se autalizar**
-    * **Se desativar**
-* Um usuário administrador:
-    * **Se autenticar**
-    * **Listar os usuários**
-    * **Verificar autenticação**
-    * **Atualizaar um usuário**
-    * **Desativar um usuário**
+Usuários comuns só podem se autenticar, verificar a própria autenticação, atualizar suas informações e desativar a própria conta.
+Usuários com permissão de administrador podem listar todos os usuários cadastrados, verificar a própria autenticação, atualizar as informações de qualquer usuário e desativar qualquer usuário.
