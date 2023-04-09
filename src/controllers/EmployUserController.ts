@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { customError } from "../errors/customError";
 import { UserType } from "../interfaces";
 import { EmployUserService } from "../services/EmployUserService";
 
@@ -9,10 +8,6 @@ export class EmployUserController {
 
         const employUserService = new EmployUserService();
         const result: UserType = await employUserService.execute(someUserId);
-
-        if (!result) {
-            throw new customError(400, "User already active");
-        };
 
         return response.status(200).json(result);
     };
